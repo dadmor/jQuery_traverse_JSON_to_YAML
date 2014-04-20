@@ -1,15 +1,11 @@
+<script src="jquery-json-to-yaml.js"></script>
+
 <pre id="output"></pre>
 
 <script>
 
-/**
- * Rebuild some code of stackoverflow to create YAML string from Json using recursive traverse tree.
- */
+/* wp_user_query meta args example */
 
-/**
- * Example Json - this is wp_user_query meta filtering arguments
- */
- 
 metaQuery = {
   "relation":"OR",
   0:{
@@ -19,66 +15,12 @@ metaQuery = {
   },
   1:{
     "key":"country",
-    "value":[20,30],
+    "value":[20,30,40,50],
     "type":"numeric",
     "compare":"="
   }
 };
 
-/**
- * On ready.
- */
-$(function(){
- render_json_as_tree(metaQuery);
-});
-/**
- * Recursive function to traverse the json object and convert into ul li format.
- */
-var gstr='---<br>';
-var prefix = 0;
-var pre='  ';
-var suf='<br>';
+$('#output').html(json_to_yaml(metaQuery));
 
-function render_prefix(nr){
-
-    var __prefix = '';
-    for (var i = 0; i <= nr; i++) {
-      __prefix += pre;
-    }
-    return __prefix;
-
-}
-var traverse = function(key, jsonObj) {    
-
-    if( jsonObj!= null && typeof jsonObj == "object") {    
-        
-        $.each(jsonObj, function(k,v) {           
-            
-            if( v != null && typeof v == "object" ){
-             gstr += render_prefix(prefix) + k + suf;
-             prefix++; 
-             traverse(k, v);
-             prefix--; 
-            } else{
-              if(typeof v == "string"){
-                  gstr += render_prefix(prefix) +  k + ': \"' + v + '\"' + suf; 
-              }
-              if(typeof v == "number"){
-                  gstr += render_prefix(prefix) + '- ' + v + suf; 
-              }
-            } 
-        });
-
-    }    
-
-};
-/**
- * Function to render the json tree.
- */
-var render_json_as_tree=function(jsonObj){
-
-  traverse("",jsonObj);
-  $('#output').html(gstr); 
-
-};
 </script>

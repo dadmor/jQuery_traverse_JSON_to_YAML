@@ -1,13 +1,13 @@
 function json_to_yaml(jsonObj){
 
-	var gstr='---<br>';
+	var gstr="---\n";
 	var prefix = 0;
-	var pre='  ';
-	var suf='<br>';
+	var pre="  ";
+	var suf="\n";
 
 	function render_prefix(nr){
 
-		var __prefix = '';
+		var __prefix = "";
 		for (var i = 0; i <= nr; i++) {
 			__prefix += pre;
 		}
@@ -18,7 +18,7 @@ function json_to_yaml(jsonObj){
 
 		if( jsonObj != null && typeof jsonObj == "object") {
 
-			$.each(jsonObj, function(k,v) {
+			jQuery.each(jsonObj, function(k,v) {
 
 				if( v != null && typeof v == "object" ){
 					gstr += render_prefix(prefix) + k + suf;
@@ -27,10 +27,10 @@ function json_to_yaml(jsonObj){
 					prefix--;
 				} else{
 					if(typeof v == "string"){
-						gstr += render_prefix(prefix) +  k + ': \"' + v + '\"' + suf;
+						gstr += render_prefix(prefix) +  k + ": \"" + v + "\"" + suf;
 					}
 					if(typeof v == "number"){
-						gstr += render_prefix(prefix) + '- ' + v + suf;
+						gstr += render_prefix(prefix) + "- " + v + suf;
 					}
 				}
 			});
